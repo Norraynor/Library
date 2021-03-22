@@ -10,7 +10,7 @@ const radioButtonElement = bookForm.elements.read;
 let canHide = false;
 myLibrary = [new Book("boobit","bub",2,false), new Book("nice book","why",15,false)]
 
-function Book(title,author,pages,read){
+function Book(title,author,pages,read=false){
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -27,22 +27,60 @@ function Book(title,author,pages,read){
 
         return message;
     }
+
+    this.toggleRead = document.createElement("input");
+    this.toggleRead.type = "checkbox";
+    this.toggleRead.id = "checkbox-read";
+    this.toggleRead.addEventListener("click",changeRead);
+
+    this.deleteButton = document.createElement("button");
+    this.deleteButton.id = "delete-button";
+    this.deleteButton.textContent = "del";
+    this.deleteButton.addEventListener("click",deleteBook);
 }
 
 function addBookToLibrary(title,author,pages,read) {
-    // do stuff here
     myLibrary.push(new Book(title,author,pages,read));
 }
+function changeRead(ele){
+    let result;
+    if (ele.target.checked) {
+        result = true;
+    }else{
+        result = false;
+    }
+    //result = myLibrary[this.dataset.index].read ? true:false;
+    myLibrary[this.dataset.index].read = result;
+    updateList();
+}
+function updateCheckbox(ele){
+    console.log(ele);
 
+}
+function deleteBook(){
+    myLibrary.splice(this.dataset.index,1);
+    updateList();
+}
+function updateList(){
+    clearBooks();
+    showBooks();
+}
 function showBooks(){
-    myLibrary.forEach(book => {
+    myLibrary.forEach((book,i) => {
+        book.deleteButton.dataset.index = i;
+        book.toggleRead.dataset.index = i;
         row = document.createElement("tr");
         for(const prop in book){
             if(book[prop].constructor === Function){
                 continue;
             }
             column = document.createElement("td");
-            column.textContent = book[prop];
+            if(book[prop].id !== "delete-button" && book[prop].id !== "checkbox-read"){
+                column.textContent = book[prop];
+            }
+            else{
+                column.appendChild(book[prop]);
+            }            
             row.appendChild(column);  
         };
         table.appendChild(row);
@@ -91,8 +129,7 @@ function getBookData(event){
         addBookToLibrary(titleElement.value,authorElement.value,pagesElement.value,radioValue);
         closeForm();
         event.preventDefault();
-        clearBooks();
-        showBooks();
+        updateList();
     }
 }
 function openForm(){

@@ -22,6 +22,13 @@ form {
     border: 1px solid #CCC;
     border-radius: 1em;
 }
+#book-form{
+    display: none;
+}
+#delete-button{
+    min-width: 25px;
+    min-height: 25px;
+}
 
 ul {
     list-style: none;
@@ -49,6 +56,9 @@ input{
 
   /* Match form field borders */
   border: 1px solid #999;
+}
+#checkbox-read{
+    width: auto;
 }
 input:focus {
   /* Additional highlight for focused elements */
