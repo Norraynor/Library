@@ -10,11 +10,13 @@ const radioButtonElement = bookForm.elements.read;
 let canHide = false;
 myLibrary = [new Book("boobit","bub",2,false), new Book("nice book","why",15,false)]
 
+const sessionStorage = window.sessionStorage;
+
 function Book(title,author,pages,read=false){
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.read = read;
+    this.read = Boolean(read);
 
     this.info = function(){
         let message;
@@ -41,6 +43,8 @@ function Book(title,author,pages,read=false){
 
 function addBookToLibrary(title,author,pages,read) {
     myLibrary.push(new Book(title,author,pages,read));
+    console.log(JSON.stringify(myLibrary));
+    sessionStorage.setItem("library",JSON.stringify(myLibrary));
 }
 function changeRead(ele){
     let result;
@@ -49,13 +53,8 @@ function changeRead(ele){
     }else{
         result = false;
     }
-    //result = myLibrary[this.dataset.index].read ? true:false;
     myLibrary[this.dataset.index].read = result;
     updateList();
-}
-function updateCheckbox(ele){
-    console.log(ele);
-
 }
 function deleteBook(){
     myLibrary.splice(this.dataset.index,1);
@@ -66,12 +65,21 @@ function updateList(){
     showBooks();
 }
 function showBooks(){
-    myLibrary.forEach((book,i) => {
+    console.log(myLibrary);
+    const localLib = JSON.parse(sessionStorage.getItem("library"));
+    console.log(typeof(localLib));
+    console.log(localLib);
+    firstRow();
+    localLib.forEach((book,i) => {
         book.deleteButton.dataset.index = i;
         book.toggleRead.dataset.index = i;
+        book.toggleRead.checked = book.read;
         row = document.createElement("tr");
         for(const prop in book){
             if(book[prop].constructor === Function){
+                continue;
+            }
+            if(prop === "read"){
                 continue;
             }
             column = document.createElement("td");
@@ -85,6 +93,35 @@ function showBooks(){
         };
         table.appendChild(row);
     });
+}
+function firstRow(){
+    const book = myLibrary[0]
+    row = document.createElement("tr");
+    for(const prop in book){
+        let newValue = "";
+        column = document.createElement("td");
+        if(book[prop].constructor === Function){
+            continue;
+        }
+        if(prop === "read"){
+            continue;
+        }
+        if(prop === "toggleRead"){
+            newValue = "Read yet?";
+            column.textContent = newValue;
+            row.appendChild(column); 
+        }
+        else if(prop==="deleteButton"){
+            newValue = "Delete book";
+            column.textContent = newValue;
+            row.appendChild(column); 
+        }
+        else{
+            column.textContent = prop.slice(0,1).toUpperCase() + prop.slice(1).toLowerCase();
+            row.appendChild(column); 
+        } 
+    };
+    table.appendChild(row);
 }
 function clearBooks(){
     table.textContent="";
@@ -124,7 +161,6 @@ function getBookData(event){
     else{
         titleElement.style.borderColor = "green";
     }
-    console.log(canHide);
     if(canHide){
         addBookToLibrary(titleElement.value,authorElement.value,pagesElement.value,radioValue);
         closeForm();
@@ -133,7 +169,6 @@ function getBookData(event){
     }
 }
 function openForm(){
-    console.log("opening form");
     bookForm.style.display = "block";
     titleElement.value = "";
     authorElement.value = "";
@@ -141,7 +176,6 @@ function openForm(){
 
 }
 function closeForm(){
-    console.log("closing form");
     bookForm.style.display = "none";
 }
 newBook.addEventListener("click",()=>{openForm()});

@@ -8,35 +8,48 @@
 </head>
 <body>
     <table id="table">
+        <div id="table-header">
+            <tr>
+                <td>Title</td>
+                <td>Author</td>
+                <td>Pages</td>
+                <td>Read yet?</td>
+                <td>Delete Book</td>
+            </tr>
+        </div>
     </table>
     <button id="new">NEW BOOK</button>
 
-    <form id="book-form">
-        <ul>
-            <li>
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" placeholder="Write title here">
-            </li>
-            <li>
-                <label for="author">Author</label>
-                <input type="text" id="author" name="author" placeholder="Write author here">
-            </li>
-            <li>
-                <label for="pages">Number of pages</label>
-                <input type="number" id="pages" name="pages" min=0 placeholder="0">
-            </li>
-            <li>
-                <label for="read">Have you read it yet?</label>
-                <label for="no" id="no-choice-label">No</label>
-                <input type="radio" id="no-choice" name="read" value=false checked>
-                <label for="yes" id="yes-choice-label">Yes</label>
-                <input type="radio" id="yes-choice" name="read" value=true>
-            </li>
-            <li>
-                <button type="submit" onclick="getBookData(event)">Submit</button>
-            </li>
-        </ul>
-    </form>
+    <div id="form-div">
+        <form id="book-form">
+            <h2>Book</h2>
+            <ul>
+                <li>
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" placeholder="Write title here">
+                </li>
+                <li>
+                    <label for="author">Author</label>
+                    <input type="text" id="author" name="author" placeholder="Write author here">
+                </li>
+                <li>
+                    <label for="pages">Number of pages</label>
+                    <input type="number" id="pages" name="pages" min=0 placeholder="0">
+                </li>
+                <li>
+                    <label for="read">Have you read it yet?</label>
+                    <label for="no" id="no-choice-label">No</label>
+                    <input type="radio" id="no-choice" name="read" value="" checked>
+                    <label for="yes" id="yes-choice-label">Yes</label>
+                    <input type="radio" id="yes-choice" name="read" value="true">
+                </li>
+                <li>
+                    <button type="submit" onclick="getBookData(event)">Submit</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+    
     <script src ="script.js"></script>
 </body>
 </html>
