@@ -27,22 +27,22 @@
             <ul>
                 <li>
                     <label for="title">Title</label>
-                    <input type="text" id="title" name="title" placeholder="Write title here">
+                    <input type="text" id="title" name="title" placeholder="Write title here" required>
                 </li>
                 <li>
                     <label for="author">Author</label>
-                    <input type="text" id="author" name="author" placeholder="Write author here">
+                    <input type="text" id="author" name="author" placeholder="Write author here" required>
                 </li>
                 <li>
                     <label for="pages">Number of pages</label>
-                    <input type="number" id="pages" name="pages" min=0 placeholder="0">
+                    <input type="number" id="pages" name="pages" min=0 placeholder="0" required>
                 </li>
                 <li>
                     <label for="read">Have you read it yet?</label>
                     <label for="no" id="no-choice-label">No</label>
-                    <input type="radio" id="no-choice" name="read" value="" checked>
+                    <input type="radio" id="no-choice" name="read" value="" checked required>
                     <label for="yes" id="yes-choice-label">Yes</label>
-                    <input type="radio" id="yes-choice" name="read" value="true">
+                    <input type="radio" id="yes-choice" name="read" value="true" required>
                 </li>
                 <li>
                     <button type="submit" onclick="getBookData(event)">Submit</button>
@@ -51,6 +51,6 @@
         </form>
     </div>
     
-    <script src ="script_class.js"></script>
+    <script src ="script.js"></script>
 </body>
 </html>
